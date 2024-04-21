@@ -1,6 +1,7 @@
 package org.example.trainingxyz;
 
 
+import org.example.models.Product;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -70,4 +71,75 @@ public class ApiTests {
         var response = given().body(body).when().delete(endpoint).then();
         response.log().body();
     }
+
+    @Test
+    public void createSerializableProduct(){
+        String endpoint = "http://localhost:8888/api_testing/product/create.php";
+        Product product = new Product(
+                "Water Bottle",
+                "Blue water bottle. Holds 64 ounces",
+                12,
+                3
+        );
+        var respnose = given().body(product).when().post(endpoint).then();
+        respnose.log().body();
+    }
+
+    @Test
+    public void creatSweatBand(){
+        String endpoint = "http://localhost:8888/api_testing/product/create.php";
+        String body = """
+                {
+                "name": "Sweatband",
+                "description": "Sweatband test",
+                "price": 5,
+                "category_id": 3
+                
+                }
+                """;
+        var response = given().body(body).when().post(endpoint).then();
+        response.log().body();
+    }
+
+    @Test
+    public void updateSweatBand(){
+        String endpoint = "http://localhost:8888/api_testing/product/update.php";
+        String body = """
+                {
+                "id": 1003,
+                "name": "Sweatband",
+                "description": "Sweatband test",
+                "price": 6,
+                "category_id": 3 
+                }
+                """;
+        var response = given().body(body).when().put(endpoint).then();
+        response.log().body();
+    }
+
+    @Test
+    public void deleteSweatBand(){
+        String endpoint = "http://localhost:8888/api_testing/product/delete.php";
+        String body = """
+                {
+                "id": 1003
+                }
+                """;
+        var response = given().body(body).when().delete(endpoint).then();
+        response.log().body();
+    }
+
+    @Test
+    public void createSerializableSweatBand(){
+        String endpoint = "http://localhost:8888/api_testing/product/create.php";
+        Product product = new Product(
+                "Water Bottle",
+                "Blue water bottle. Holds 64 ounces",
+                12,
+                3
+        );
+        var respnose = given().body(product).when().post(endpoint).then();
+        respnose.log().body();
+    }
+
 }
